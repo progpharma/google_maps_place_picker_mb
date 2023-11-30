@@ -12,6 +12,6 @@ Search for files ending with `.example` and copy them in the same location witho
 > \cp lib/keys.dart.example lib/keys.dart
 > \cp android/app/src/main/AndroidManifest.xml.example android/app/src/main/AndroidManifest.xml
 > \cp ios/Runner/AppDelegate.swift.example ios/Runner/AppDelegate.swift
-> sed -i '' 's/YOUR ANDROID KEY HERE/{YOUR ANDROID KEY HERE}/g' lib/keys.dart android/app/src/main/AndroidManifest.xml
-> sed -i '' 's/YOUR IOS KEY HERE/{YOUR IOS KEY HERE}/g' lib/keys.dart ios/Runner/AppDelegate.swift
+> sed -i '' 's/YOUR ANDROID KEY HERE/REPLACE_ME/g' lib/keys.dart android/app/src/main/AndroidManifest.xml
+> sed -i '' 's/YOUR IOS KEY HERE/REPLACE_ME/g' lib/keys.dart ios/Runner/AppDelegate.swift
 > ```
