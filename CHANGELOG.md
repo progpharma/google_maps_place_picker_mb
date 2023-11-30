@@ -1,3 +1,8 @@
+## [NEXT]
+
+- Bump dependency versions
+- Fix Material3 theming issue on zoom buttons for Flutter 3.16+
+
 ## [3.1.2] - 13/Sep/2023
 
 - Fix potential crash on hesitant camera movements #67
