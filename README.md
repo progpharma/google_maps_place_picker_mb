@@ -7,6 +7,8 @@
 > ```
 > flutter pub add google_maps_place_picker_mb
 > ```
+>
+> If you'd like to contribute, please read the [CONTRIBUTING.md](CONTRIBUTING.md) notice.
 > 
 > ~ _martin-braun_
 
