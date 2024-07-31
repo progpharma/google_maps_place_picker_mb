@@ -1,14 +1,12 @@
 # Google Maps Place Picker - MB edition
 
-> This README is only slightly changed from its original repo which this repository was forked from. Due to no maintenance by the original author, I want to provide this fork that is maintained, I also added more functionality to it.
+> This README is only slightly changed from its original repo which this repository was forked from. Due to little maintenance by the original author, I want to provide this fork that is not just more maintained, I also add more functionality to it and pick any significant changes and PRs on the original repository, as well.
 > 
 > To install:  
 > 
 > ```
 > flutter pub add google_maps_place_picker_mb
 > ```
->
-> If you'd like to contribute, please read the [CONTRIBUTING.md](CONTRIBUTING.md) notice.
 > 
 > ~ _martin-braun_
 
@@ -29,6 +27,12 @@ Builder using kevmoo's [tuple](https://pub.dev/packages/tuple)
 > Note: This preview shows a new feature added by me: The ability to restrict the picked selection to the circle area. This can be disabled, obviously.
 > 
 > ~ _martin-braun_
+
+## Support
+If the package was useful or saved your time, please do not hesitate to buy <s>me</s> _the original author_ a cup of coffee! ;)  
+The more caffeine <s>I get</s> _he gets_, the more useful projects <s>I</s> _he_ can make in the future. 
+
+<a href="https://www.buymeacoffee.com/Oj17EcZ" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Getting Started
 
@@ -267,11 +271,10 @@ myLocationButtonCooldown | int | Cooldown time in seconds for the 'myLocationBut
 forceSearchOnZoomChanged | bool | Wether to allow place search even when the zoom has changed. Defaults to false.
 automaticallyImplyAppBarLeading | bool | By default, there is a back button on the top. Setting false will remove the back button.
 autocompleteOnTrailingWhitespace | bool | Whether to allow autocomplete to run even on whitespace at the end of the search. Defaults to false.
-hidePlaceDetailsWhenDraggingPin | bool | Whether to hide place details when dragging pin. Defaults to true.
-ignoreLocationPermissionErrors* | bool | Whether to ignore location permission errors. Defaults to false.
 onTapBack* | Function(PlaceProvider)? | Called when leaving the Google Picker by pressing the back button.
 zoomGesturesEnabled\* | bool | Disable pinch zoom gestures, this does not control the appearance of the zoom in/out buttons.  
 zoomControlsEnabled\* | bool | Show the zoom in/out buttons on the bottom right of the screen, this does not control the pinch zoom gestures.
+compassEnabled\* | bool | Show the compass to allow the user re-orient the map towards North.
 onCameraMoveStarted\* | Function(PlaceProvider)? | Called when the camera starts moving. (GoogleMap widget)
 onCameraMove\* | CameraPositionCallback? | Called repeatedly as the camera continues to move after an onCameraMoveStarted call. (GoogleMap widget)
 onCameraIdle\* | Function(PlaceProvider)? | Called when camera movement has ended, there are no pending animations and the user has stopped interacting with the map. (GoogleMap widget)

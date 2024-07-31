@@ -10,8 +10,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:google_maps_place_picker_mb/providers/place_provider.dart';
 import 'package:google_maps_place_picker_mb/src/components/animated_pin.dart';
-import 'package:flutter_google_maps_webservices/geocoding.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:google_maps_webservice/geocoding.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
@@ -116,12 +116,6 @@ class GoogleMapPlacePicker extends StatelessWidget {
       return;
     }
 
-    if (provider.cameraPosition == null) {
-      // Camera position cannot be determined for some reason ...
-      provider.placeSearchingState = SearchingState.Idle;
-      return;
-    }
-
     provider.placeSearchingState = SearchingState.Searching;
 
     final GeocodingResponse response =
@@ -195,7 +189,7 @@ class GoogleMapPlacePicker extends StatelessWidget {
     );
   }
 
-  Widget _buildGoogleMapInner(PlaceProvider provider, MapType mapType) {
+  Widget _buildGoogleMapInner(PlaceProvider? provider, MapType mapType) {
     CameraPosition initialCameraPosition =
         CameraPosition(target: this.initialTarget, zoom: 15);
     return GoogleMap(
@@ -212,6 +206,7 @@ class GoogleMapPlacePicker extends StatelessWidget {
           ? Set<Circle>.from([pickArea])
           : Set<Circle>(),
       onMapCreated: (GoogleMapController controller) {
+        if (provider == null) return;
         provider.mapController = controller;
         provider.setCameraPosition(null);
         provider.pinState = PinState.Idle;
@@ -221,15 +216,20 @@ class GoogleMapPlacePicker extends StatelessWidget {
           provider.setCameraPosition(initialCameraPosition);
           _searchByCameraLocation(provider);
         }
-        onMapCreated?.call(controller);
+
+        if (onMapCreated != null) {
+          onMapCreated!(controller);
+        }
       },
       onCameraIdle: () {
+        if (provider == null) return;
         if (provider.isAutoCompleteSearching) {
           provider.isAutoCompleteSearching = false;
           provider.pinState = PinState.Idle;
           provider.placeSearchingState = SearchingState.Idle;
           return;
         }
+
         // Perform search only if the setting is to true.
         if (usePinPointingSearch!) {
           // Search current camera location only if camera has moved (dragged) before.
@@ -244,25 +244,40 @@ class GoogleMapPlacePicker extends StatelessWidget {
             });
           }
         }
+
         provider.pinState = PinState.Idle;
-        onCameraIdle?.call(provider);
+
+        if (onCameraIdle != null) {
+          onCameraIdle!(provider);
+        }
       },
       onCameraMoveStarted: () {
-        onCameraMoveStarted?.call(provider);
+        if (provider == null) return;
+        if (onCameraMoveStarted != null) {
+          onCameraMoveStarted!(provider);
+        }
+
         provider.setPrevCameraPosition(provider.cameraPosition);
+
         // Cancel any other timer.
         provider.debounceTimer?.cancel();
+
         // Update state, dismiss keyboard and clear text.
         provider.pinState = PinState.Dragging;
+
         // Begins the search state if the hide details is enabled
         if (this.hidePlaceDetailsWhenDraggingPin!) {
           provider.placeSearchingState = SearchingState.Searching;
         }
+
         onMoveStart!();
       },
       onCameraMove: (CameraPosition position) {
+        if (provider == null) return;
         provider.setCameraPosition(position);
-        onCameraMove?.call(position);
+        if (onCameraMove != null) {
+          onCameraMove!(position);
+        }
       },
       // gestureRecognizers make it possible to navigate the map when it's a
       // child in a scroll view e.g ListView, SingleChildScrollView...
@@ -388,18 +403,13 @@ class GoogleMapPlacePicker extends StatelessWidget {
           return Container();
         } else {
           return Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.1 - 3.6,
-            right: 2,
+            bottom: 50,
+            right: 10,
             child: Card(
               elevation: 4.0,
-              color: Theme.of(context).cardColor,
-              surfaceTintColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
-              ),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.15 - 13,
-                height: 107,
+                width: 40,
+                height: 100,
                 child: Column(
                   children: <Widget>[
                     IconButton(

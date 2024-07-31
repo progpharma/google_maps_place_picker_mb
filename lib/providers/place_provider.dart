@@ -5,8 +5,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/src/models/pick_result.dart';
 import 'package:google_maps_place_picker_mb/src/place_picker.dart';
-import 'package:flutter_google_maps_webservices/geocoding.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:google_maps_webservice/geocoding.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +23,7 @@ class PlaceProvider extends ChangeNotifier {
       httpClient: httpClient,
       apiHeaders: apiHeaders as Map<String, String>?,
     );
+
     geocoding = GoogleMapsGeocoding(
       apiKey: apiKey,
       baseUrl: proxyBaseUrl,
@@ -41,7 +42,7 @@ class PlaceProvider extends ChangeNotifier {
   LocationAccuracy? desiredAccuracy;
   bool isAutoCompleteSearching = false;
 
-  Future<void> updateCurrentLocation({bool gracefully = false}) async {
+  Future<void> updateCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -51,10 +52,6 @@ class PlaceProvider extends ChangeNotifier {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      if (gracefully) {
-        // Or you can swallow the issue and respect the user's privacy
-        return;
-      }
       return Future.error('Location services are disabled.');
     }
 
@@ -67,20 +64,12 @@ class PlaceProvider extends ChangeNotifier {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        if (gracefully) {
-          // Or you can swallow the issue and respect the user's privacy
-          return;
-        }
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      if (gracefully) {
-        // Or you can swallow the issue and respect the user's privacy
-        return;
-      }
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
@@ -161,6 +150,7 @@ class PlaceProvider extends ChangeNotifier {
   switchMapType() {
     _mapType = MapType.values[(_mapType.index + 1) % MapType.values.length];
     if (_mapType == MapType.none) _mapType = MapType.normal;
+
     notifyListeners();
   }
 }

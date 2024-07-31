@@ -1,23 +1,3 @@
-## [NEXT]
-
-- Bump dependency versions
-- Fix Material3 theming issue on zoom buttons for Flutter 3.16+
-
-## [3.1.2] - 13/Sep/2023
-
-- Fix potential crash on hesitant camera movements #67
-- Replace obsolete dependencies to support the major release of `http`
-
-## [3.1.1] - 14/Jul/2023
-
-- Fix `package_info_plus` compatibility
-
-## [3.1.0] - 14/Jul/2023
-
-- Graceful location requests via `ignoreLocationPermissionErrors`
-- Better zoom controls that look more consistent with the overall experience
-- Upgrade packages
-
 ## [3.0.2] - 10/May/2023
 
 - Fix getting current location 
